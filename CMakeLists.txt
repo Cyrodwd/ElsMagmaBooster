@@ -27,7 +27,7 @@
 #
 
 # Define the project name
-project(els_magma_booster)
+project(ElsMagmaBooster C)
 
 # Set the cmake minimum version to 3.5.1
 cmake_minimum_required(VERSION 3.5.1)
@@ -36,7 +36,7 @@ cmake_minimum_required(VERSION 3.5.1)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
 
 # Add all c source files under the src directory
-file(GLOB SOURCES "src/*.c")
+file(GLOB SOURCES "src/*.c" "src/screens/*.c" "src/entities/*.c" "src/contexts/*.c" "src/components/*.c")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Add all headers files under the include directory
