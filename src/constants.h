@@ -2,9 +2,15 @@
 #define CONSTANTS_H
 
 /* Window */
-#define EMB_SCREEN_WIDTH ( 380 )
-#define EMB_SCREEN_HEIGHT ( 450 )
-#define EMB_DEFAULT_FPS_LIMIT (60)
+
+#define EMB_RENDERER_WIDTH ( 380 )
+#define EMB_RENDERER_HEIGHT ( 450 )
+
+/* FPS */
+
+#define EMB_DEFAULT_FPS_LIMIT ( 60 )
+#define EMB_MAX_FPS ( 144 )
+#define EMB_MIN_FPS ( 10 )
 
 /* Keyboard keys alias */
 
@@ -15,9 +21,5 @@
 /* Physics */
 
 #define EMB_GRAVITY (340.0f)
-
-/* Arithmetic */
-
-#define EMB_MIL2SEC (1000.0f)
 
 #endif /* CONSTANTS_H */

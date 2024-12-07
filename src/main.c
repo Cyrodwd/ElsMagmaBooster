@@ -29,17 +29,17 @@
  */
 
 #include <time.h>
-#include <stdbool.h>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_log.h>
 #include <stdlib.h>
 
-#include "game_context.h"
+#include "components/timer.h"
+#include "constants.h"
+#include "contexts/game_context.h"
+#include "contexts/keyboard_context.h"
+#include "contexts/window_context.h"
 
-/* VERSION: v0.1 */
+/* VERSION: v0.1.1 */
 
 EMB_GameContext embCORE = { 0 };
 
@@ -53,28 +53,31 @@ int main(void)
     
     srand(time(NULL));
 
-    if (!EMB_InitGame())
+    if (!EMB_InitGameContext(&embCORE, EMB_DEFAULT_FPS_LIMIT))
     {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Unable to load game resources and data.");
         EMB_Quit();
         return 1;
     }
 
+    EMB_InitKeyboard(&embCORE.keyboard);
 
     float delta = 0.0f;
 
-    while (EMB_IsGameOpen())
+    while (EMB_IsGameOpen(&embCORE))
     {
-        EMB_HandleEvents();
+        EMB_HandleEvents(&embCORE);
 
-        delta = EMB_GetDeltaTime();
+        delta = EMB_GetFrameTime();
 
-        // I feel bad for EMB_Update, you have a very heavy task to do, forgive me lmao
-        EMB_Update(delta);
-
-        EMB_Render();
+        EMB_UpdateKeyboard(&embCORE.keyboard);
+        EMB_UpdateGameContext(&embCORE, delta);
+        
+        EMB_RenderGameContext(&embCORE);
+        EMB_UpdateFrameRate(&embCORE.window);
     }
 
+    EMB_DestroyGameContext(&embCORE);
     EMB_Quit();
     return 0;
 }
